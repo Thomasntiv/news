@@ -21,25 +21,56 @@
             text-align: center;
             background-color: #333;
             color: white;
-            padding: 20px 0;
+            padding: 10px 0;
             position: relative;
         }
         .header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 20px;
         }
         .header .description {
-            font-size: 14px;
+            font-size: 12px;
             font-style: italic;
             margin-top: 5px;
         }
         .controls {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
             margin: 20px 0;
             padding: 0 10px;
+        }
+        .preferences-button {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-theme .preferences-button {
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #555;
+        }
+        .preferences-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .dark-theme .preferences-container {
+            background-color: #333;
+            color: #fff;
         }
         .news-container {
             display: flex;
@@ -171,7 +202,8 @@
     <div class="header">
         <h1>Τελευταίες Ειδήσεις</h1>
         <div class="description">Ταχεία ενημέρωση</div>
-        <div class="controls">
+        <button id="preferences-button" class="preferences-button">Προτιμήσεις</button>
+        <div class="controls" id="controls">
             <button id="contact-button">Contact</button>
             <button id="category-button">Κατηγορίες</button>
             <button id="toggle-button">Εμφάνιση Νέων Τίτλων Πάνω</button>
@@ -196,8 +228,7 @@
 
     <script>
         const feedUrls = [
-        "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Farttv.gr%2Ffeed%2F" ,
-        "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.greeknamedays.gr%2Ftools%2Feortologiorssfeed%2Findex.php%3Flangid%3Dgr" ,
+	"https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.greeknamedays.gr%2Ftools%2Feortologiorssfeed%2Findex.php%3Flangid%3Dgr" ,
 	"https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.taxheaven.gr%2Fbibliothiki%2Fsoft%2Fxml%2Fsoft_new.xm" ,
 	"https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.ertnews.gr%2Frss" ,
 	"https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fskai%2FUulu" ,
@@ -506,6 +537,13 @@
 
             // Ξεκινά την εμφάνιση ειδήσεων κάθε 2 δευτερόλεπτα
             startDisplayingNews();
+
+            const preferencesButton = document.getElementById('preferences-button');
+            const controls = document.getElementById('controls');
+            preferencesButton.addEventListener('click', () => {
+                const isVisible = controls.style.display === 'flex';
+                controls.style.display = isVisible ? 'none' : 'flex';
+            });
 
             const toggleButton = document.getElementById('toggle-button');
             toggleButton.addEventListener('click', () => {
