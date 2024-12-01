@@ -201,7 +201,7 @@
 <body>
     <div class="header">
         <h1>Τελευταίες Ειδήσεις</h1>
-        <div class="description">Ταχεία ενημέρωση απο 50+ ειδησεογραφικά sites</div>
+        <div class="description">Ταχεία ενημέρωση</div>
         <button id="preferences-button" class="preferences-button">Προτιμήσεις</button>
         <div class="controls" id="controls">
             <button id="contact-button">Contact</button>
@@ -229,23 +229,24 @@
     <div class="news-container" id="news-container"></div>
 
     <script>
+const initialFeedUrls = [
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.example.com/feed"
+];
+
 const primaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.greeknamedays.gr/tools/eortologiorssfeed",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.alphatv.gr/rss" ,
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.megatv.com/feed/" ,
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.star.gr/rss/" ,
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.protothema.gr/rss/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.naftemporiki.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.kathimerini.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsbeast.gr/rss-feed",
+    "https://api.rss2json.com/v1/api.json?rss_url=http://www.news.gr/rss.ashx",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.iefimerida.gr/rss.xml",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.zougla.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.tanea.gr/rss"
 ];
 
 const secondaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.greeknamedays.gr%2Ftools%2Feortologiorssfeed%2Findex.php%3Flangid%3Dgr",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tovima.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.news247.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsit.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.ethnos.gr/rss",
@@ -265,18 +266,22 @@ const tertiaryFeedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.eleftherostypos.gr/feed",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.avgi.gr/rss.xml",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.documentonews.gr/feed",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.dimokratia.gr/feed" ,
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed" ,
-    "https://api.rss2json.com/v1/api.json?rss_url=http://www.news.gr/rss.ashx",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.dimokratia.gr/feed"
+];
+
+const quaternaryFeedUrls = [
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.kontranews.gr/rss"
 ];
 
 let allNews = [];
 let newsCounter = 0;
 let addToTop = true;
 let isDarkTheme = false;
-let displayInterval = 780;
+let displayInterval = 650;
 let intervalId;
 let showImages = true;
+let adCounter = 0;
+const adImages = ["anafores1.png", "anafores2.png", "anafores3.png"];
 
 async function fetchNews(feedUrl) {
     try {
@@ -296,6 +301,9 @@ async function fetchNews(feedUrl) {
 }
 
 async function loadAllFeeds() {
+    const initialFetchPromises = initialFeedUrls.map(url => fetchNews(url));
+    await Promise.all(initialFetchPromises);
+
     const primaryFetchPromises = primaryFeedUrls.map(url => fetchNews(url));
     await Promise.all(primaryFetchPromises);
 
@@ -304,6 +312,9 @@ async function loadAllFeeds() {
 
     const tertiaryFetchPromises = tertiaryFeedUrls.map(url => fetchNews(url));
     await Promise.all(tertiaryFetchPromises);
+
+    const quaternaryFetchPromises = quaternaryFeedUrls.map(url => fetchNews(url));
+    await Promise.all(quaternaryFetchPromises);
 }
 
 function displayNextNews() {
@@ -316,9 +327,10 @@ function displayNextNews() {
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
         adBar.innerHTML = `
-            <img src="anafores.png" alt="Διαφήμιση" style="max-width: 100%; height: auto;">
+            <img src="${adImages[adCounter % adImages.length]}" alt="Διαφήμιση" style="max-width: 100%; height: auto;">
         `;
         newsContainer.prepend(adBar);
+        adCounter++;
     }
 
     const newsItem = allNews.shift(); // Αφαιρεί τον πρώτο τίτλο από τη λίστα για να τον εμφανίσει
@@ -407,6 +419,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const categoryButton = document.getElementById('category-button');
     const categoryOptionsContainer = document.getElementById('category-options-container');
+
     categoryButton.addEventListener('click', () => {
         const isVisible = categoryOptionsContainer.style.display === 'flex';
         categoryOptionsContainer.style.display = isVisible ? 'none' : 'flex';
