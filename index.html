@@ -229,6 +229,12 @@
     <div class="news-container" id="news-container"></div>
 
     <script>
+
+const pprimaryFeedUrls = [
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed/",
+
+	];
+	    
 const primaryFeedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.protothema.gr/rss/",
@@ -292,6 +298,10 @@ async function fetchNews(feedUrl) {
 }
 
 async function loadAllFeeds() {
+	
+    const pprimaryFetchPromises = pprimaryFeedUrls.map(url => fetchNews(url));
+    await Promise.all(pprimaryFetchPromises);
+	
     const primaryFetchPromises = primaryFeedUrls.map(url => fetchNews(url));
     await Promise.all(primaryFetchPromises);
 
