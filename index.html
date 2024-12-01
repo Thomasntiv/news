@@ -201,7 +201,7 @@
 <body>
     <div class="header">
         <h1>Τελευταίες Ειδήσεις</h1>
-        <div class="description">Ταχεία ενημέρωση</div>
+        <div class="description">Ταχεία ενημέρωση απο 50+ ειδησεογραφικά sites</div>
         <button id="preferences-button" class="preferences-button">Προτιμήσεις</button>
         <div class="controls" id="controls">
             <button id="contact-button">Contact</button>
@@ -229,9 +229,7 @@
     <div class="news-container" id="news-container"></div>
 
     <script>
-const feedUrls = [
-
-
+const primaryFeedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.protothema.gr/rss/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.naftemporiki.gr/rss",
@@ -240,7 +238,10 @@ const feedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=http://www.news.gr/rss.ashx",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.iefimerida.gr/rss.xml",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.zougla.gr/rss",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tanea.gr/rss",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tanea.gr/rss"
+];
+
+const secondaryFeedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.tovima.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.news247.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsit.gr/rss",
@@ -249,172 +250,175 @@ const feedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.pronews.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.alfavita.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.dikaiologitika.gr/rss",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed"
+];
+
+const tertiaryFeedUrls = [
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.efsyn.gr/rss.xml",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsbomb.gr/rss" ,
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsbomb.gr/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.skai.gr/news/rss",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.euro2day.gr/ListRSS.aspx",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.reader.gr/",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.eleftherostypos.gr/feed",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.avgi.gr/rss.xml",
     "https://api.rss2json.com/v1/api.json?rss_url=https://www.documentonews.gr/feed",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.dimokratia.gr/feed",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.kontranews.gr/rss",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.ert.gr/feed",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.agrinionews.gr/feed" ,
-
-
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.dimokratia.gr/feed"
 ];
 
+let allNews = [];
+let newsCounter = 0;
+let addToTop = true;
+let isDarkTheme = false;
+let displayInterval = 450;
+let intervalId;
+let showImages = true;
 
-        let allNews = [];
-        let newsCounter = 0;
-        let addToTop = true;
-        let isDarkTheme = false;
-        let displayInterval = 650;
-        let intervalId;
-        let showImages = true;
-
-        async function fetchNews(feedUrl) {
-            try {
-                const response = await fetch(feedUrl);
-                if (!response.ok) throw new Error('Σφάλμα στη λήψη δεδομένων');
-                const data = await response.json();
-                data.items.forEach(item => {
-                    allNews.push({
-                        title: item.title,
-                        link: item.link,
-                        thumbnail: item.thumbnail || '' // Χρησιμοποιεί το πεδίο "thumbnail" αν υπάρχει
-                    });
-                });
-            } catch (error) {
-                console.error('Σφάλμα:', error);
-            }
-        }
-
-        async function loadAllFeeds() {
-            const fetchPromises = feedUrls.map(url => fetchNews(url));
-            await Promise.all(fetchPromises);
-        }
-
-        function displayNextNews() {
-            if (allNews.length === 0) return;
-
-            const newsContainer = document.getElementById('news-container');
-
-            if (newsCounter % 15 === 0 && newsCounter > 0) {
-                // Προσθήκη διαφήμισης κάθε 15 τίτλους
-                const adBar = document.createElement('div');
-                adBar.className = 'ad-bar';
-                adBar.innerHTML = `
-                    <img src="anafores.png" alt="Διαφήμιση" style="max-width: 100%; height: auto;">
-                `;
-                newsContainer.prepend(adBar);
-            }
-
-            const newsItem = allNews.shift(); // Αφαιρεί τον πρώτο τίτλο από τη λίστα για να τον εμφανίσει
-
-            if (newsItem) {
-                const newsBar = document.createElement('div');
-                newsBar.className = 'news-bar';
-                newsBar.innerHTML = `
-                    <div class="news-bar-content">
-                        ${showImages && newsItem.thumbnail ? `<img src="${newsItem.thumbnail}" alt="News Image" class="news-image">` : ''}
-                        <h3>${newsItem.title}</h3>
-                    </div>
-                    <a href="${newsItem.link}" target="_blank">Διαβάστε περισσότερα</a>
-                `;
-
-                if (addToTop) {
-                    newsContainer.prepend(newsBar);
-                } else {
-                    newsContainer.append(newsBar);
-                }
-
-                newsCounter++;
-            }
-        }
-
-        function startDisplayingNews() {
-            if (intervalId) {
-                clearInterval(intervalId);
-            }
-            intervalId = setInterval(displayNextNews, displayInterval);
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Φόρτωσε όλες τις ειδήσεις χωρίς να περιμένεις
-            await loadAllFeeds();
-
-            // Ξεκινά την εμφάνιση ειδήσεων κάθε 2 δευτερόλεπτα
-            startDisplayingNews();
-
-            const preferencesButton = document.getElementById('preferences-button');
-            const controls = document.getElementById('controls');
-            preferencesButton.addEventListener('click', () => {
-                const isVisible = controls.style.display === 'flex';
-                controls.style.display = isVisible ? 'none' : 'flex';
-            });
-
-            const toggleButton = document.getElementById('toggle-button');
-            toggleButton.addEventListener('click', () => {
-                addToTop = !addToTop;
-                toggleButton.textContent = addToTop
-                    ? "Εμφάνιση Νέων Τίτλων Πάνω"
-                    : "Εμφάνιση Νέων Τίτλων Κάτω";
-            });
-
-            const themeToggleButton = document.getElementById('theme-toggle-button');
-            themeToggleButton.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('dark-theme', isDarkTheme);
-                themeToggleButton.textContent = isDarkTheme ? "Light Theme" : "Dark Theme";
-            });
-
-            const imageToggleButton = document.getElementById('image-toggle-button');
-            imageToggleButton.addEventListener('click', () => {
-                showImages = !showImages;
-                imageToggleButton.textContent = showImages ? "Απόκρυψη Εικόνων" : "Προβολή Εικόνων";
-                // Επαναφόρτωση ειδήσεων για την εφαρμογή των αλλαγών στις εικόνες
-                document.getElementById('news-container').innerHTML = '';
-                newsCounter = 0;
-                loadAllFeeds().then(startDisplayingNews);
-            });
-
-            const timeButton = document.getElementById('time-button');
-            const timeOptionsContainer = document.getElementById('time-options-container');
-            timeButton.addEventListener('click', () => {
-                const isVisible = timeOptionsContainer.style.display === 'flex';
-                timeOptionsContainer.style.display = isVisible ? 'none' : 'flex';
-            });
-
-            timeOptionsContainer.addEventListener('click', (event) => {
-                if (event.target.classList.contains('time-option')) {
-                    displayInterval = parseInt(event.target.getAttribute('data-value'));
-                    startDisplayingNews();
-                    timeOptionsContainer.style.display = 'none';
-                }
-            });
-
-            const categoryButton = document.getElementById('category-button');
-            const categoryOptionsContainer = document.getElementById('category-options-container');
-            categoryButton.addEventListener('click', () => {
-                const isVisible = categoryOptionsContainer.style.display === 'flex';
-                categoryOptionsContainer.style.display = isVisible ? 'none' : 'flex';
-            });
-
-            categoryOptionsContainer.addEventListener('click', (event) => {
-                if (event.target.classList.contains('category-option')) {
-                    const link = event.target.getAttribute('data-link');
-                    window.location.href = link;
-                }
-            });
-
-            const contactButton = document.getElementById('contact-button');
-            contactButton.addEventListener('click', () => {
-                window.location.href = 'https://news.example.com/contact';
+async function fetchNews(feedUrl) {
+    try {
+        const response = await fetch(feedUrl);
+        if (!response.ok) throw new Error('Σφάλμα στη λήψη δεδομένων');
+        const data = await response.json();
+        data.items.forEach(item => {
+            allNews.push({
+                title: item.title,
+                link: item.link,
+                thumbnail: item.thumbnail || '' // Χρησιμοποιεί το πεδίο "thumbnail" αν υπάρχει
             });
         });
-    </script>
+    } catch (error) {
+        console.error('Σφάλμα:', error);
+    }
+}
+
+async function loadAllFeeds() {
+    const primaryFetchPromises = primaryFeedUrls.map(url => fetchNews(url));
+    await Promise.all(primaryFetchPromises);
+
+    const secondaryFetchPromises = secondaryFeedUrls.map(url => fetchNews(url));
+    await Promise.all(secondaryFetchPromises);
+
+    const tertiaryFetchPromises = tertiaryFeedUrls.map(url => fetchNews(url));
+    await Promise.all(tertiaryFetchPromises);
+}
+
+function displayNextNews() {
+    if (allNews.length === 0) return;
+
+    const newsContainer = document.getElementById('news-container');
+
+    if (newsCounter % 15 === 0 && newsCounter > 0) {
+        // Προσθήκη διαφήμισης κάθε 15 τίτλους
+        const adBar = document.createElement('div');
+        adBar.className = 'ad-bar';
+        adBar.innerHTML = `
+            <img src="anafores.png" alt="Διαφήμιση" style="max-width: 100%; height: auto;">
+        `;
+        newsContainer.prepend(adBar);
+    }
+
+    const newsItem = allNews.shift(); // Αφαιρεί τον πρώτο τίτλο από τη λίστα για να τον εμφανίσει
+
+    if (newsItem) {
+        const newsBar = document.createElement('div');
+        newsBar.className = 'news-bar';
+        newsBar.innerHTML = `
+            <div class="news-bar-content">
+                ${showImages && newsItem.thumbnail ? `<img src="${newsItem.thumbnail}" alt="News Image" class="news-image">` : ''}
+                <h3>${newsItem.title}</h3>
+            </div>
+            <a href="${newsItem.link}" target="_blank">Διαβάστε περισσότερα</a>
+        `;
+
+        if (addToTop) {
+            newsContainer.prepend(newsBar);
+        } else {
+            newsContainer.append(newsBar);
+        }
+
+        newsCounter++;
+    }
+}
+
+function startDisplayingNews() {
+    if (intervalId) {
+        clearInterval(intervalId);
+    }
+    intervalId = setInterval(displayNextNews, displayInterval);
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Φόρτωσε όλες τις ειδήσεις χωρίς να περιμένεις
+    await loadAllFeeds();
+
+    // Ξεκινά την εμφάνιση ειδήσεων κάθε 2 δευτερόλεπτα
+    startDisplayingNews();
+
+    const preferencesButton = document.getElementById('preferences-button');
+    const controls = document.getElementById('controls');
+    preferencesButton.addEventListener('click', () => {
+        const isVisible = controls.style.display === 'flex';
+        controls.style.display = isVisible ? 'none' : 'flex';
+    });
+
+    const toggleButton = document.getElementById('toggle-button');
+    toggleButton.addEventListener('click', () => {
+        addToTop = !addToTop;
+        toggleButton.textContent = addToTop
+            ? "Εμφάνιση Νέων Τίτλων Πάνω"
+            : "Εμφάνιση Νέων Τίτλων Κάτω";
+    });
+
+    const themeToggleButton = document.getElementById('theme-toggle-button');
+    themeToggleButton.addEventListener('click', () => {
+        isDarkTheme = !isDarkTheme;
+        document.body.classList.toggle('dark-theme', isDarkTheme);
+        themeToggleButton.textContent = isDarkTheme ? "Light Theme" : "Dark Theme";
+    });
+
+    const imageToggleButton = document.getElementById('image-toggle-button');
+    imageToggleButton.addEventListener('click', () => {
+        showImages = !showImages;
+        imageToggleButton.textContent = showImages ? "Απόκρυψη Εικόνων" : "Προβολή Εικόνων";
+        // Επαναφόρτωση ειδήσεων για την εφαρμογή των αλλαγών στις εικόνες
+        document.getElementById('news-container').innerHTML = '';
+        newsCounter = 0;
+        loadAllFeeds().then(startDisplayingNews);
+    });
+
+    const timeButton = document.getElementById('time-button');
+    const timeOptionsContainer = document.getElementById('time-options-container');
+    timeButton.addEventListener('click', () => {
+        const isVisible = timeOptionsContainer.style.display === 'flex';
+        timeOptionsContainer.style.display = isVisible ? 'none' : 'flex';
+    });
+
+    timeOptionsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('time-option')) {
+            displayInterval = parseInt(event.target.getAttribute('data-value'));
+            startDisplayingNews();
+            timeOptionsContainer.style.display = 'none';
+        }
+    });
+
+    const categoryButton = document.getElementById('category-button');
+    const categoryOptionsContainer = document.getElementById('category-options-container');
+    categoryButton.addEventListener('click', () => {
+        const isVisible = categoryOptionsContainer.style.display === 'flex';
+        categoryOptionsContainer.style.display = isVisible ? 'none' : 'flex';
+    });
+
+    categoryOptionsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('category-option')) {
+            const link = event.target.getAttribute('data-link');
+            window.location.href = link;
+        }
+    });
+
+    const contactButton = document.getElementById('contact-button');
+    contactButton.addEventListener('click', () => {
+        window.location.href = 'https://news.example.com/contact';
+    });
+});
+</script>
 </body>
 </html>
