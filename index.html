@@ -289,7 +289,8 @@ const adImages = ["anafores1.png", "anafores2.png", "anafores3.png"];
 
 async function fetchNews(feedUrl) {
     try {
-        const response = await fetch(feedUrl);
+        const cacheBuster = `&cb=${new Date().getTime()}`;
+        const response = await fetch(feedUrl + cacheBuster);
         if (!response.ok) throw new Error('Σφάλμα στη λήψη δεδομένων');
         const data = await response.json();
         data.items.forEach(item => {
@@ -305,6 +306,7 @@ async function fetchNews(feedUrl) {
 }
 
 async function loadAllFeeds() {
+    allNews = []; // Εκκαθάριση προηγούμενων ειδήσεων
     const initialFetchPromises = initialFeedUrls.map(url => fetchNews(url));
     await Promise.all(initialFetchPromises);
 
@@ -319,6 +321,8 @@ async function loadAllFeeds() {
 
     const quaternaryFetchPromises = quaternaryFeedUrls.map(url => fetchNews(url));
     await Promise.all(quaternaryFetchPromises);
+
+    displayNextNews(); // Εμφάνιση πρώτης είδησης
 }
 
 function displayNextNews() {
