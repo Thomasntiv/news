@@ -285,7 +285,7 @@ let displayInterval = 580;
 let intervalId;
 let showImages = true;
 let adCounter = 0;
-const adImages = ["anafores1.png", "anafores02.png", "anafores3.png"];
+const adImages = ["anafores1.png", "anafores3.png"];
 
 async function fetchNews(feedUrl) {
     try {
@@ -330,7 +330,7 @@ function displayNextNews() {
 
     const newsContainer = document.getElementById('news-container');
 
-    if (newsCounter % 8 === 0 && newsCounter > 0) {
+    if (newsCounter % 5 === 0 && newsCounter > 0) {
         // Προσθήκη διαφήμισης κάθε 15 τίτλους
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
