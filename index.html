@@ -156,6 +156,16 @@
             border-color: #444;
             color: #fff;
         }
+        .ad-bar a {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+        .ad-bar img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
         button {
             padding: 10px 15px;
             font-size: 14px;
@@ -235,62 +245,70 @@
 
     <script>
 const initialFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.protothema.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=6&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://antenna.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=6&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.capital.gr/api/tags/epikairotita&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com/skai/Uulu%2F&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu6&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.ethnos.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=7&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.alphatv.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=6&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.protothema.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.ethnos.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+
+
+
 ];
 
 const primaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.esos.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.megatv.com/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.koutipandoras.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.902.gr/feed/featured&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.topontiki.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tanea.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc"
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.esos.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.megatv.com/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.koutipandoras.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.902.gr/feed/featured&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.topontiki.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tanea.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://antenna.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=46&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.capital.gr/api/tags/epikairotita&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://feeds.feedburner.com/skai/Uulu%2F&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu6&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.alphatv.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=46&order_by=pubDate&order_dir=desc",
+
 ];
 
 const secondaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tovima.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.news247.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsit.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.lifo.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.naftemporiki.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.kathimerini.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",,
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.iefimerida.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.zougla.gr/rss/&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc"
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tovima.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.news247.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.newsit.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.lifo.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.in.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.naftemporiki.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.kathimerini.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",,
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.iefimerida.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.zougla.gr/rss/&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.makeleio.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc"
+
 ];
 
 const tertiaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.efsyn.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.eleftherostypos.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.avgi.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.documentonews.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://antenna.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.thebest.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.efsyn.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.eleftherostypos.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu45&count=15&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.avgi.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.documentonews.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu45&count=5&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://antenna.gr/rss.xml&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.thebest.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+
 
 ];
 
 const quaternaryFeedUrls = [
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.gazzetta.gr/rss/&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tvopen.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=15&order_by=pubDate&order_dir=desc",
-    "https://api.rss2json.com/v1/api.json?rss_url=https://enachannel.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=5&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.gazzetta.gr/rss/&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://www.tvopen.gr/rss&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+    "https://api.rss2json.com/v1/api.json?rss_url=https://enachannel.gr/feed&api_key=toyxyotetxxdopswr7mamxctr6kbxddthgd8wpu5&count=45&order_by=pubDate&order_dir=desc",
+
 ];
 
 let allNews = [];
 let newsCounter = 0;
 let addToTop = true;
 let isDarkTheme = false;
-let displayInterval = 580;
+let displayInterval = 450;
 let intervalId;
 let showImages = true;
 let adCounter = 0;
-const adImages = ["anafores1.png", "anafores2.png", "anafores.png"];
+const adLinks = ["https://example.com/ad1", "https://example.com/ad2", "https://example.com/ad3", "https://example.com/ad4", "https://example.com/ad5"];
+const adImages = ["gf.gif", "anafores.png"];
 
 async function fetchNews(feedUrl) {
     try {
@@ -335,15 +353,20 @@ function displayNextNews() {
 
     const newsContainer = document.getElementById('news-container');
 
-    if (newsCounter % 10 === 0 && newsCounter > 10) {
-        // Προσθήκη διαφήμισης κάθε 15 τίτλους
+    if (newsCounter % 15 === 0 && newsCounter > 0) {
+        // Προσθήκη διαφήμισης 2 εικόνων κάθε 10 τίτλους
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
         adBar.innerHTML = `
-            <img src="${adImages[adCounter % adImages.length]}" alt="Διαφήμιση" style="max-width: 100%; height: auto;">
+            <a href="${adLinks[adCounter % adLinks.length]}" target="_blank">
+                <img src="${adImages[adCounter % adImages.length]}" alt="Διαφήμιση">
+            </a>
+            <a href="${adLinks[(adCounter + 1) % adLinks.length]}" target="_blank">
+                <img src="${adImages[(adCounter + 1) % adImages.length]}" alt="titloi.gr">
+            </a>
         `;
+        adCounter += 2;
         newsContainer.prepend(adBar);
-        adCounter++;
     }
 
     const newsItem = allNews.shift(); // Αφαιρεί τον πρώτο τίτλο από τη λίστα για να τον εμφανίσει
@@ -404,6 +427,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.classList.toggle('dark-theme', isDarkTheme);
         themeToggleButton.textContent = isDarkTheme ? "Light Theme" : "Dark Theme";
     });
+
 
     const imageToggleButton = document.getElementById('image-toggle-button');
     imageToggleButton.addEventListener('click', () => {
