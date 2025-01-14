@@ -353,7 +353,7 @@ function displayNextNews() {
 
     const newsContainer = document.getElementById('news-container');
 
-    if (newsCounter % 155 === 0 && newsCounter > 0) {
+    if (newsCounter % 12 === 0 && newsCounter > 0) {
         // Προσθήκη διαφήμισης 2 εικόνων κάθε 10 τίτλους
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
