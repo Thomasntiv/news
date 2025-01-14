@@ -308,7 +308,7 @@ let intervalId;
 let showImages = true;
 let adCounter = 0;
 const adLinks = ["https://example.com/ad1", "https://example.com/ad2", "https://example.com/ad3", "https://example.com/ad4", "https://example.com/ad5"];
-const adImages = ["anafores.png", "anafores.png"];
+const adImages = ["anafores.png", "1anafores.png"];
 
 async function fetchNews(feedUrl) {
     try {
@@ -353,7 +353,7 @@ function displayNextNews() {
 
     const newsContainer = document.getElementById('news-container');
 
-    if (newsCounter % 8 === 0 && newsCounter > 0) {
+    if (newsCounter % 20 === 0 && newsCounter > 0) {
         // Προσθήκη διαφήμισης 2 εικόνων κάθε 10 τίτλους
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
