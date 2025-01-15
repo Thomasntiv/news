@@ -353,7 +353,7 @@ function displayNextNews() {
 
     const newsContainer = document.getElementById('news-container');
 
-    if (newsCounter % 20 === 0 && newsCounter > 0) {
+    if (newsCounter % 11 === 0 && newsCounter > 0) {
         // Προσθήκη διαφήμισης 2 εικόνων κάθε 10 τίτλους
         const adBar = document.createElement('div');
         adBar.className = 'ad-bar';
@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Φόρτωσε όλες τις ειδήσεις χωρίς να περιμένεις
     await loadAllFeeds();
 
-    // Ξεκινά την εμφάνιση ειδήσεων κάθε 2 δευτερόλεπτα
+    // Ξεκινά την εμφάνιση ειδήσεων κάθε 2 δευτερόλεπτα το 5 πρεπει να το βγαλω εαν δεν δλβ
     startDisplayingNews(5);
 
     const preferencesButton = document.getElementById('preferences-button');
