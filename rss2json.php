@@ -1,17 +1,18 @@
 <?php
 $rss_sources = [
-    "https://www.in.gr/feed/" => 1,
-    "https://www.newsit.gr/feed/" => 1,
-    "https://www.iefimerida.gr/rss.xml" => 1,
+    "https://www.kavalapost.gr/feed/" => 1,
+    "https://www.proininews.gr/feed/" => 1,
+    "https://www.k-tipos.gr/feed/" => 1,
+    "https://www.kavala-portal.gr/feed/" => 1,
     "https://feeds.feedburner.com/dikaiologitika/ZteV" => 1,
     "https://www.documentonews.gr/rss" => 1,
-    "https://www.protothema.gr/rss" => 2,
+    "https://www.protothema.gr/rss" => 1,
     "https://www.tovima.gr/feed/" => 2,
     "https://www.gazzetta.gr/rss" => 2,
-    "https://eleftherostypos.gr/feed" => 2,
+    "https://eleftherostypos.gr/feed" => 3,
     "https://www.makeleio.gr/feed/" => 2,
-    "https://www.tanea.gr/feed/" => 2,
-    "https://www.zoogla.gr/feed/" => 2,
+    "https://www.tanea.gr/feed/" => 3,
+    "https://www.zougla.gr/feed/" => 4,
     "https://www.ethnos.gr/rss" => 2
 ];
 
