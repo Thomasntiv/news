@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Ειδήσεις | NewsPortal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+
+    header, footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #1f1f1f;
+    }
+
+    header p {
+      margin-top: -10px;
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .dropbtn, .simplebtn {
+      background-color: #333;
+      color: white;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #2a2a2a;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.6);
+      z-index: 1;
+      border-radius: 5px;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #444;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    footer p {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .news-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .news-item {
+      display: flex;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .news-item img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .news-content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .news-content h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .news-content .read-more {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #444;
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .news-content .source {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    @media (max-width: 600px) {
+      .news-item {
+        flex-direction: column;
+      }
+
+      .news-item img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Ειδήσεις</h1>
+  <p>ειδήσεις σε τίτλους</p>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn">Περιφέρειες</button>
+      <div class="dropdown-content">
+        <a href="attiki.html">Αττική</a>
+        <a href="ipiros.html">Ήπειρος</a>
+        <a href="thessalia.html">Θεσσαλία</a>
+        <a href="makedonia.html">Μακεδονία</a>
+        <a href="kriti.html">Κρήτη</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Περιοχές</button>
+      <div class="dropdown-content">
+        <a href="ioannina.html">Ιωάννινα</a>
+        <a href="arta.html">Άρτα</a>
+        <a href="preveza.html">Πρέβεζα</a>
+        <a href="thessaloniki.html">Θεσσαλονίκη</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Κατηγορίες</button>
+      <div class="dropdown-content">
+        <a href="politiki.html">Πολιτική</a>
+        <a href="oikonomia.html">Οικονομία</a>
+        <a href="athlitika.html">Αθλητικά</a>
+        <a href="ygeia.html">Υγεία</a>
+        <a href="texnologia.html">Τεχνολογία</a>
+      </div>
+    </div>
+
+    <a href="epikoinonia.html" class="simplebtn">Επικοινωνία</a>
+  </nav>
+</header>
+
+<div class="news-container" id="news"></div>
+
+<footer>
+  <p>&copy; 2025 NewsPortal</p>
+</footer>
+
+<script>
+  fetch('json/ipiros.json?t=' + new Date().getTime())
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById('news');
+      data.items.forEach(item => {
+        const hasImage = item.image && !item.image.includes("placeholder");
+        const card = document.createElement("div");
+        card.className = "news-item";
+        card.innerHTML = `
+          ${hasImage ? `<img src="${item.image}" alt="εικόνα">` : ""}
+          <div class="news-content">
+            <h3>${item.title}</h3>
+            <a class="read-more" href="${item.link}" target="_blank">Διαβάστε περισσότερα</a>
+            <div class="source">Πηγή: ${item.source}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      document.getElementById("news").innerHTML = "<p>Αποτυχία φόρτωσης ειδήσεων.</p>";
+    });
+</script>
+
+</body>
+</html>
